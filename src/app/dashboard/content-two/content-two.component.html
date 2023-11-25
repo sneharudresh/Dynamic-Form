@@ -1,0 +1,14 @@
+<div class="content">
+    <form #template="ngForm" (ngSubmit)="submit(template)">
+        <div class="items">
+            <label for="name">Name</label>
+            <input type="text" [(ngModel)]="name">
+        </div>
+        <div>
+            <label for="name">Email</label>
+            <input type="text" [(ngModel)]="email">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+    

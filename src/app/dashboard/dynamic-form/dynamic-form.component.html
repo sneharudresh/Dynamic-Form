@@ -1,0 +1,37 @@
+<!-- dynamic-form.component.html -->
+<div class="container">
+    <form [formGroup]="form" class="dynamic-form">
+        <div *ngFor="let section of formSections" class="form-section">
+            <h2>{{ section.label }}</h2>
+            <div *ngFor="let field of section.fields" class="form-control">
+                <label>{{ field.label }}</label>
+                <div [ngSwitch]="field.type">
+                    <input *ngSwitchCase="'text'" type="text" [formControlName]="field.name"
+                        [placeholder]="field.placeholder" />
+
+                    <input *ngSwitchCase="'date'" type="date" [formControlName]="field.name" />
+
+                    <ng-container *ngSwitchCase="'radio'">
+                        <input type="radio" [formControlName]="field.name" [value]="option.value"
+                            *ngFor="let option of field.options" />
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'checkbox'">
+                        <input type="checkbox" [formControlName]="field.name" [value]="option.value"
+                            *ngFor="let option of field.options" />
+                    </ng-container>
+
+                    <select *ngSwitchCase="'select'" [formControlName]="field.name">
+                        <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+                    </select>
+                </div>
+                <div *ngIf="isFieldInvalid(field.name)" class="error-container">
+                    <div *ngFor="let error of getErrors(field.name)" class="error-message">
+                        {{ error }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+</div>
